@@ -140,8 +140,20 @@ export const g2_vn_money: QuestionGenerator = (rng) => {
   const denominations = [1000, 2000, 5000, 10000];
   const a = pick(rng, denominations);
   const b = pick(rng, denominations);
-  return make('g2-vn-money', 'fill-blank', `${a.toLocaleString('vi-VN')} đ + ${b.toLocaleString('vi-VN')} đ = ... đồng`, String(a + b), {
-    unit: 'đ',
+  const sum = a + b;
+  const fmt = (n: number) => `${n.toLocaleString('vi-VN')} đ`;
+  const distractorSet = new Set<number>();
+  let step = 1000;
+  while (distractorSet.size < 3) {
+    const sign = rng() < 0.5 ? -1 : 1;
+    const cand = sum + sign * step;
+    if (cand !== sum && cand >= 1000) distractorSet.add(cand);
+    step += 1000;
+    if (step > 20000) break;
+  }
+  const choices = shuffle(rng, [fmt(sum), ...Array.from(distractorSet).map(fmt)]);
+  return make('g2-vn-money', 'multiple-choice', `${fmt(a)} + ${fmt(b)} = ... đồng`, fmt(sum), {
+    choices,
     semester: 1,
   });
 };

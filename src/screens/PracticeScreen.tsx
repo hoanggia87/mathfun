@@ -265,25 +265,33 @@ export function PracticeScreen() {
       </ScrollView>
 
       {current.type === 'multiple-choice' && current.choices ? (
-        <View style={styles.choicesBar}>
-          {current.choices.map((c) => (
-            <Pressable
-              key={c}
-              onPress={() => {
-                feedbackTap();
-                setInput(c);
-                handleSubmitInput(c);
-              }}
-              disabled={feedback !== 'idle'}
-              style={({ pressed }) => [
-                styles.choice,
-                { opacity: pressed ? 0.85 : 1, transform: [{ scale: pressed ? 0.97 : 1 }] },
-              ]}
-            >
-              <Text style={styles.choiceText}>{c}</Text>
-            </Pressable>
-          ))}
-        </View>
+        (() => {
+          const longChoice = current.choices.some((c) => c.length > 3);
+          return (
+            <View style={styles.choicesBar}>
+              {current.choices.map((c) => (
+                <Pressable
+                  key={c}
+                  onPress={() => {
+                    feedbackTap();
+                    setInput(c);
+                    handleSubmitInput(c);
+                  }}
+                  disabled={feedback !== 'idle'}
+                  style={({ pressed }) => [
+                    styles.choice,
+                    longChoice && styles.choiceWide,
+                    { opacity: pressed ? 0.85 : 1, transform: [{ scale: pressed ? 0.97 : 1 }] },
+                  ]}
+                >
+                  <Text style={styles.choiceText} numberOfLines={1} adjustsFontSizeToFit>
+                    {c}
+                  </Text>
+                </Pressable>
+              ))}
+            </View>
+          );
+        })()
       ) : (
         <NumberPad
           value={input}
@@ -419,6 +427,12 @@ const styles = StyleSheet.create({
     shadowRadius: 6,
     shadowOffset: { width: 0, height: 3 },
     elevation: 3,
+  },
+  choiceWide: {
+    flexBasis: '45%',
+    flexGrow: 0,
+    maxWidth: undefined,
+    paddingHorizontal: spacing.md,
   },
   choiceText: { ...typography.h2, color: colors.textInverse, fontSize: 28 },
   skipWrap: { paddingHorizontal: spacing.md },
