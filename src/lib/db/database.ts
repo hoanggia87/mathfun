@@ -12,7 +12,12 @@ export async function getDb(): Promise<SQLite.SQLiteDatabase> {
   return _db;
 }
 
-const MIGRATIONS: { version: number; up: string }[] = [
+type Migration = {
+  version: number;
+  up: string | ((db: SQLite.SQLiteDatabase) => Promise<void>);
+};
+
+const MIGRATIONS: Migration[] = [
   {
     version: 1,
     up: `
@@ -77,9 +82,16 @@ const MIGRATIONS: { version: number; up: string }[] = [
   },
   {
     version: 2,
-    up: `
-      ALTER TABLE profiles ADD COLUMN grade INTEGER NOT NULL DEFAULT 2;
-    `,
+    up: async (db: SQLite.SQLiteDatabase) => {
+      const cols = await db.getAllAsync<{ name: string }>(
+        "PRAGMA table_info(profiles)"
+      );
+      if (!cols.some((c) => c.name === 'grade')) {
+        await db.execAsync(
+          'ALTER TABLE profiles ADD COLUMN grade INTEGER NOT NULL DEFAULT 1;'
+        );
+      }
+    },
   },
 ];
 
@@ -92,7 +104,11 @@ async function runMigrations(db: SQLite.SQLiteDatabase) {
 
   for (const m of MIGRATIONS) {
     if (m.version > current) {
-      await db.execAsync(m.up);
+      if (typeof m.up === 'string') {
+        await db.execAsync(m.up);
+      } else {
+        await m.up(db);
+      }
       await db.runAsync('INSERT INTO schema_version (version) VALUES (?)', m.version);
     }
   }
@@ -170,7 +186,7 @@ async function seedDefaults(db: SQLite.SQLiteDatabase) {
       'Bé',
       '🦁',
       0,
-      2,
+      1,
       Date.now()
     );
   }
