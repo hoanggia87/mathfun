@@ -75,6 +75,12 @@ export type SessionConfig = {
   count: number;
 };
 
+const DEDUP_MAX_RETRY = 8;
+
+function promptKey(q: Question): string {
+  return q.prompt.trim().toLowerCase().replace(/\s+/g, ' ');
+}
+
 export function generateQuestions(config: SessionConfig): Question[] {
   const rng = defaultRng();
   const { grade, semester, topics, count } = config;
@@ -92,21 +98,35 @@ export function generateQuestions(config: SessionConfig): Question[] {
   }
 
   const questions: Question[] = [];
+  const seen = new Set<string>();
+
+  const drawCandidate = (): Question | null => {
+    const useWordProblem = wordProblemPool.length > 0 && rng() < (wordProblemTopics.length / topics.length) * 0.6;
+    if (useWordProblem) return pick(rng, wordProblemPool);
+    if (generatorTopics.length > 0) {
+      const topic = pick(rng, generatorTopics);
+      return gens[topic](rng);
+    }
+    if (wordProblemPool.length > 0) return pick(rng, wordProblemPool);
+    return null;
+  };
 
   for (let i = 0; i < count; i++) {
-    const useWordProblem = wordProblemPool.length > 0 && rng() < (wordProblemTopics.length / topics.length) * 0.6;
-    let q: Question | null = null;
-    if (useWordProblem) {
-      q = pick(rng, wordProblemPool);
-    } else if (generatorTopics.length > 0) {
-      const topic = pick(rng, generatorTopics);
-      q = gens[topic](rng);
-    } else if (wordProblemPool.length > 0) {
-      q = pick(rng, wordProblemPool);
-    } else {
-      break;
+    let chosen: Question | null = null;
+    let fallback: Question | null = null;
+    for (let attempt = 0; attempt < DEDUP_MAX_RETRY; attempt++) {
+      const candidate = drawCandidate();
+      if (!candidate) break;
+      fallback = candidate;
+      if (!seen.has(promptKey(candidate))) {
+        chosen = candidate;
+        break;
+      }
     }
-    if (q) questions.push(maybeConvertToMC(q, rng));
+    const q = chosen ?? fallback;
+    if (!q) break;
+    seen.add(promptKey(q));
+    questions.push(maybeConvertToMC(q, rng));
   }
 
   return shuffle(rng, questions);

@@ -183,19 +183,45 @@ export const g2_time_hour_minute: QuestionGenerator = (rng) => {
 };
 
 export const g2_calendar: QuestionGenerator = (rng) => {
+  const weekdays = ['Chủ nhật', 'thứ Hai', 'thứ Ba', 'thứ Tư', 'thứ Năm', 'thứ Sáu', 'thứ Bảy'];
   const cases: (() => Question)[] = [
     () => make('g2-calendar', 'multiple-choice', '1 tuần có mấy ngày?', '7', { choices: ['5', '6', '7', '10'], semester: 2 }),
     () => make('g2-calendar', 'multiple-choice', '1 năm có mấy tháng?', '12', { choices: ['10', '11', '12', '24'], semester: 2 }),
+    () => make('g2-calendar', 'multiple-choice', '1 ngày có bao nhiêu giờ?', '24', { choices: ['12', '18', '24', '30'], semester: 2 }),
+    () => make('g2-calendar', 'multiple-choice', '1 giờ có bao nhiêu phút?', '60', { choices: ['30', '45', '60', '100'], semester: 2 }),
+    () => make('g2-calendar', 'multiple-choice', '1 quý có bao nhiêu tháng?', '3', { choices: ['2', '3', '4', '6'], semester: 2 }),
+    () => make('g2-calendar', 'multiple-choice', '1 năm có bao nhiêu ngày? (năm thường)', '365', { choices: ['360', '365', '366', '375'], semester: 2 }),
     () => {
       const m = randInt(rng, 1, 12);
       const days31 = [1, 3, 5, 7, 8, 10, 12];
-      const days30 = [4, 6, 9, 11];
       let ans: string;
       if (m === 2) ans = '28';
       else if (days31.includes(m)) ans = '31';
       else ans = '30';
       const opts = shuffle(rng, ['28', '30', '31']);
       return make('g2-calendar', 'multiple-choice', `Tháng ${m} có bao nhiêu ngày? (năm thường)`, ans, {
+        choices: opts,
+        semester: 2,
+      });
+    },
+    () => {
+      const start = randInt(rng, 0, 6);
+      const offset = randInt(rng, 1, 6);
+      const target = (start + offset) % 7;
+      const distractors = shuffle(rng, weekdays.filter((_, i) => i !== target)).slice(0, 3);
+      const opts = shuffle(rng, [weekdays[target], ...distractors]);
+      return make('g2-calendar', 'multiple-choice', `Hôm nay là ${weekdays[start]}, ${offset} ngày sau là thứ mấy?`, weekdays[target], {
+        choices: opts,
+        semester: 2,
+      });
+    },
+    () => {
+      const m = pick(rng, [1, 3, 5, 7, 8, 10, 12, 4, 6, 9, 11]);
+      const days31 = [1, 3, 5, 7, 8, 10, 12];
+      const last = days31.includes(m) ? 31 : 30;
+      const ans = String(last);
+      const opts = shuffle(rng, ['29', '30', '31']);
+      return make('g2-calendar', 'multiple-choice', `Ngày cuối cùng của tháng ${m} là ngày bao nhiêu?`, ans, {
         choices: opts,
         semester: 2,
       });
