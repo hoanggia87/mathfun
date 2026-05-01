@@ -15,7 +15,7 @@
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.mathsth.app",
-      "buildNumber": "1",
+      "buildNumber": "3",
       "infoPlist": {
         "NSPhotoLibraryUsageDescription": "Cho phép chọn ảnh đại diện cho bé từ thư viện ảnh.",
         "ITSAppUsesNonExemptEncryption": false
