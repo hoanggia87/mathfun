@@ -20,8 +20,8 @@ export function HomeScreen() {
     return (
       <SafeAreaView style={styles.container}>
         <View style={styles.center}>
-          <Text style={typography.body}>Chưa chọn bé.</Text>
-          <Button title="Chọn bé" onPress={() => nav.popToTop()} style={{ marginTop: spacing.md }} />
+          <Text style={typography.body}>Chưa chọn hồ sơ.</Text>
+          <Button title="Chọn hồ sơ" onPress={() => nav.popToTop()} style={{ marginTop: spacing.md }} />
         </View>
       </SafeAreaView>
     );
@@ -40,6 +40,11 @@ export function HomeScreen() {
             <View style={[styles.badge, { backgroundColor: colors.surfaceAlt }]}>
               <Text style={[styles.badgeText, { color: colors.text }]}>⭐ {profile.totalPoints} điểm</Text>
             </View>
+            {profile.pendingSpins > 0 && (
+              <View style={[styles.badge, { backgroundColor: colors.accent }]}>
+                <Text style={styles.badgeText}>🎡 {profile.pendingSpins} lượt</Text>
+              </View>
+            )}
           </View>
         </View>
 
@@ -50,6 +55,14 @@ export function HomeScreen() {
             size="lg"
             fullWidth
           />
+          {profile.pendingSpins > 0 && (
+            <Button
+              title={`🎡  Vòng quay (${profile.pendingSpins})`}
+              onPress={() => nav.navigate('Wheel')}
+              size="md"
+              fullWidth
+            />
+          )}
           <Button
             title="🎁  Đổi quà"
             onPress={() => nav.navigate('Rewards')}

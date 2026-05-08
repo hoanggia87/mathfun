@@ -12,7 +12,7 @@ export type RootStackParamList = {
     count: number;
   };
   Result: { sessionId: string };
-  Wheel: { sessionId: string };
+  Wheel: { sessionId?: string } | undefined;
   Rewards: undefined;
   ParentGate: { next: keyof RootStackParamList };
   ParentSettings: undefined;

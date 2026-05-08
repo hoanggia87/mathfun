@@ -10,10 +10,10 @@ import type { RootStackParamList } from '@/navigation/types';
 type Nav = NativeStackNavigationProp<RootStackParamList, 'ParentSettings'>;
 
 const ITEMS: { route: keyof RootStackParamList; emoji: string; title: string; sub: string }[] = [
-  { route: 'ParentProfilesEdit', emoji: '👶', title: 'Quản lý hồ sơ bé', sub: 'Thêm / sửa / xóa hồ sơ và lớp học của bé' },
-  { route: 'ParentRewardsEdit', emoji: '🎁', title: 'Quản lý quà', sub: 'Thêm / sửa / xóa danh sách quà cho bé' },
+  { route: 'ParentProfilesEdit', emoji: '👤', title: 'Quản lý hồ sơ học sinh', sub: 'Thêm / sửa / xóa hồ sơ và lớp học' },
+  { route: 'ParentRewardsEdit', emoji: '🎁', title: 'Quản lý quà', sub: 'Thêm / sửa / xóa danh sách quà' },
   { route: 'ParentWheelConfig', emoji: '🎡', title: 'Cấu hình vòng quay', sub: 'Thay đổi điểm và màu các ô' },
-  { route: 'ParentHistory', emoji: '📊', title: 'Lịch sử bài làm', sub: 'Xem tiến độ học tập của các bé' },
+  { route: 'ParentHistory', emoji: '📊', title: 'Lịch sử bài làm', sub: 'Xem tiến độ học tập của học sinh' },
   { route: 'ParentPin', emoji: '🔐', title: 'Đổi PIN', sub: 'Cập nhật PIN bảo vệ' },
 ];
 

@@ -78,7 +78,7 @@ export const G4_WORD_PROBLEMS: WordProblemTemplate[] = [
   {
     topic: 'g4-word-fraction',
     semester: 2,
-    prompt: 'Mẹ có 24 quả táo, mẹ cho bé 2/3 số táo. Hỏi mẹ cho bé bao nhiêu quả táo?',
+    prompt: 'Mẹ có 24 quả táo, mẹ cho em 2/3 số táo. Hỏi mẹ cho em bao nhiêu quả táo?',
     answer: '16',
     unit: 'quả',
   },

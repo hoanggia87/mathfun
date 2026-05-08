@@ -1,7 +1,6 @@
 import 'react-native-get-random-values';
 import 'react-native-gesture-handler';
 import React, { useEffect, useState } from 'react';
-import { ActivityIndicator, StyleSheet, View } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
@@ -17,7 +16,9 @@ import {
 } from '@expo-google-fonts/baloo-2';
 
 import { getDb } from '@/lib/db/database';
+import { preloadAudio } from '@/lib/audio';
 import { colors } from '@/theme';
+import { LoadingScreen } from '@/components/LoadingScreen';
 import type { RootStackParamList } from '@/navigation/types';
 import { ProfilesScreen } from '@/screens/ProfilesScreen';
 import { HomeScreen } from '@/screens/HomeScreen';
@@ -48,6 +49,7 @@ export default function App() {
   });
 
   useEffect(() => {
+    preloadAudio();
     (async () => {
       try {
         await getDb();
@@ -60,11 +62,7 @@ export default function App() {
   }, []);
 
   if (!ready || !fontsLoaded) {
-    return (
-      <View style={styles.loading}>
-        <ActivityIndicator size="large" color={colors.primary} />
-      </View>
-    );
+    return <LoadingScreen />;
   }
 
   return (
@@ -93,13 +91,13 @@ export default function App() {
             <Stack.Screen
               name="Result"
               component={ResultScreen}
-              options={{ title: 'Kết quả', headerBackVisible: false }}
+              options={{ title: 'Kết quả', headerBackVisible: false, gestureEnabled: false }}
             />
             <Stack.Screen name="Wheel" component={WheelScreen} options={{ title: 'Vòng quay' }} />
             <Stack.Screen name="Rewards" component={RewardsScreen} options={{ title: 'Đổi quà' }} />
             <Stack.Screen name="ParentGate" component={ParentGateScreen} options={{ title: 'Phụ huynh' }} />
             <Stack.Screen name="ParentSettings" component={ParentSettingsScreen} options={{ title: 'Cài đặt' }} />
-            <Stack.Screen name="ParentProfilesEdit" component={ParentProfilesEditScreen} options={{ title: 'Quản lý hồ sơ bé' }} />
+            <Stack.Screen name="ParentProfilesEdit" component={ParentProfilesEditScreen} options={{ title: 'Quản lý hồ sơ học sinh' }} />
             <Stack.Screen name="ParentRewardsEdit" component={ParentRewardsEditScreen} options={{ title: 'Quản lý quà' }} />
             <Stack.Screen name="ParentHistory" component={ParentHistoryScreen} options={{ title: 'Lịch sử' }} />
             <Stack.Screen name="ParentWheelConfig" component={ParentWheelConfigScreen} options={{ title: 'Vòng quay' }} />
@@ -111,6 +109,3 @@ export default function App() {
   );
 }
 
-const styles = StyleSheet.create({
-  loading: { flex: 1, alignItems: 'center', justifyContent: 'center', backgroundColor: colors.bg },
-});

@@ -27,14 +27,14 @@ export const G2_WORD_PROBLEMS: WordProblemTemplate[] = [
   {
     topic: 'g2-word-add-sub',
     semester: 1,
-    prompt: 'Mẹ có 85 quả cam, mẹ cho bé 17 quả. Hỏi mẹ còn lại bao nhiêu quả cam?',
+    prompt: 'Mẹ có 85 quả cam, mẹ cho em 17 quả. Hỏi mẹ còn lại bao nhiêu quả cam?',
     answer: '68',
     unit: 'quả',
   },
   {
     topic: 'g2-word-add-sub',
     semester: 1,
-    prompt: 'Bé Bin có 25 viên bi, anh trai có nhiều hơn bé Bin 18 viên. Hỏi anh trai có bao nhiêu viên bi?',
+    prompt: 'Bin có 25 viên bi, anh trai có nhiều hơn Bin 18 viên. Hỏi anh trai có bao nhiêu viên bi?',
     answer: '43',
     unit: 'viên',
   },

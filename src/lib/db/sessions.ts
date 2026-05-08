@@ -90,14 +90,6 @@ export async function saveSession(
   return record;
 }
 
-export async function consumeSpin(sessionId: string): Promise<void> {
-  const db = await getDb();
-  await db.runAsync(
-    'UPDATE sessions SET spins_used = spins_used + 1 WHERE id = ?',
-    sessionId
-  );
-}
-
 export async function listSessionsByProfile(
   profileId: string,
   limit = 50

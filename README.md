@@ -15,7 +15,7 @@
 - ⭐ **Hệ thống sao** (1-3 sao theo độ chính xác)
 - 🎡 **Vòng quay may mắn** đổi điểm thưởng
 - 🎁 **Đổi quà** do phụ huynh cấu hình
-- 👨‍👩‍👧 **Khu phụ huynh** bảo vệ bằng PIN, quản lý nhiều bé
+- 👨‍👩‍👧 **Khu phụ huynh** bảo vệ bằng PIN, quản lý nhiều hồ sơ học sinh
 - 🔒 **100% offline**, không quảng cáo, không IAP
 
 ---
@@ -95,7 +95,7 @@ eas submit --platform ios
 
 | Table | Purpose |
 |---|---|
-| `profiles` | Hồ sơ bé (name, avatar, grade, total_points) |
+| `profiles` | Hồ sơ học sinh (name, avatar, grade, total_points) |
 | `sessions` | Lịch sử bài làm (correct/wrong/streak/duration/stars) |
 | `rewards` | Quà phụ huynh cấu hình |
 | `reward_redemptions` | Lịch sử đổi quà |

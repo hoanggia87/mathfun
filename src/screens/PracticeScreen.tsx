@@ -17,6 +17,7 @@ import { FeedbackOverlay } from '@/components/FeedbackOverlay';
 import { generateQuestions, checkAnswer } from '@/lib/questions/mixer';
 import type { Question } from '@/lib/questions/types';
 import { saveSession } from '@/lib/db/sessions';
+import { addPendingSpins } from '@/lib/db/profiles';
 import { useProfileStore } from '@/store/profileStore';
 import { useSessionStore } from '@/store/sessionStore';
 import { feedbackCorrect, feedbackTap, feedbackWrong } from '@/lib/audio';
@@ -26,17 +27,29 @@ import type { RootStackParamList } from '@/navigation/types';
 type Nav = NativeStackNavigationProp<RootStackParamList, 'Practice'>;
 type Rt = RouteProp<RootStackParamList, 'Practice'>;
 
-const STAR_THRESHOLDS = [
-  { min: 0.9, stars: 3 as const, spins: 3 },
-  { min: 0.75, stars: 2 as const, spins: 2 },
-  { min: 0.5, stars: 1 as const, spins: 1 },
-  { min: 0, stars: 0 as const, spins: 0 },
-];
+type Stars = 0 | 1 | 2 | 3;
+
+function computeStars(accuracy: number): Stars {
+  if (accuracy >= 0.9) return 3;
+  if (accuracy >= 0.75) return 2;
+  if (accuracy >= 0.5) return 1;
+  return 0;
+}
+
+function computeSpins(stars: Stars, count: number): number {
+  if (stars === 0) return 0;
+  let table: readonly [number, number, number];
+  if (count <= 20) table = [1, 2, 3];
+  else if (count <= 50) table = [3, 6, 10];
+  else table = [5, 9, 15];
+  return table[stars - 1];
+}
 
 export function PracticeScreen() {
   const nav = useNavigation<Nav>();
   const params = useRoute<Rt>().params;
   const profile = useProfileStore((s) => s.current);
+  const updateCurrent = useProfileStore((s) => s.updateCurrent);
   const setLastResult = useSessionStore((s) => s.setLastResult);
 
   const [queue, setQueue] = useState<Question[]>([]);
@@ -166,7 +179,8 @@ export function PracticeScreen() {
     if (!profile) return;
     const duration = Math.round((Date.now() - startTimeRef.current) / 1000);
     const accuracy = firstTryCorrect / total;
-    const tier = STAR_THRESHOLDS.find((t) => accuracy >= t.min)!;
+    const stars = computeStars(accuracy);
+    const spins = computeSpins(stars, total);
 
     const record = await saveSession({
       profileId: profile.id,
@@ -179,9 +193,13 @@ export function PracticeScreen() {
       skippedCount,
       bestStreak,
       durationSeconds: duration,
-      stars: tier.stars,
-      spinsEarned: tier.spins,
+      stars,
+      spinsEarned: spins,
     });
+    if (spins > 0) {
+      const newPending = await addPendingSpins(profile.id, spins);
+      updateCurrent({ pendingSpins: newPending });
+    }
     setLastResult(record);
     nav.replace('Result', { sessionId: record.id });
   };
@@ -266,7 +284,7 @@ export function PracticeScreen() {
 
       {current.type === 'multiple-choice' && current.choices ? (
         (() => {
-          const longChoice = current.choices.some((c) => c.length > 3);
+          const longChoice = current.choices.some((c) => c.length > 2);
           return (
             <View style={styles.choicesBar}>
               {current.choices.map((c) => (

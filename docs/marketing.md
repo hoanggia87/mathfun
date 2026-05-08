@@ -9,7 +9,7 @@ Tài liệu chứa tất cả nội dung sẵn dùng cho App Store Connect (và 
 | Trường | Giá trị | Ghi chú |
 |---|---|---|
 | **App Name** | `Vui Học Toán` | Tối đa 30 ký tự ✓ |
-| **Subtitle** | `Ôn toán tiểu học cho bé` | Tối đa 30 ký tự ✓ |
+| **Subtitle** | `Ôn toán tiểu học lớp 1-5` | Tối đa 30 ký tự ✓ |
 | **Bundle ID** | `com.mathsth.app` | Đổi nếu cần trước khi build |
 | **Category (chính)** | `Education` | |
 | **Category (phụ)** | `Games > Educational` | |
@@ -24,7 +24,7 @@ Tài liệu chứa tất cả nội dung sẵn dùng cho App Store Connect (và 
 App Store cho phép 100 ký tự keywords (cách nhau bằng dấu phẩy, không khoảng trắng):
 
 ```
-toán,tiểu học,ôn toán,lớp 1,lớp 2,lớp 3,lớp 4,lớp 5,bé học,vui học,chân trời sáng tạo,trẻ em
+toán,tiểu học,ôn toán,lớp 1,lớp 2,lớp 3,lớp 4,lớp 5,học sinh,vui học,chân trời sáng tạo,học toán
 ```
 
 (99 chars — có thể tinh chỉnh thêm)
@@ -33,7 +33,7 @@ toán,tiểu học,ôn toán,lớp 1,lớp 2,lớp 3,lớp 4,lớp 5,bé học,v
 
 ## 📖 Mô tả ngắn (Promotional Text — 170 ký tự)
 
-> Ứng dụng ôn tập toán tiểu học vui nhộn cho bé lớp 1 đến lớp 5. Bám sát chương trình Chân Trời Sáng Tạo. Hoàn toàn miễn phí, không quảng cáo, hoạt động offline.
+> Ứng dụng ôn tập toán tiểu học vui nhộn cho học sinh lớp 1 đến lớp 5. Bám sát chương trình Chân Trời Sáng Tạo. Hoàn toàn miễn phí, không quảng cáo, hoạt động offline.
 
 (168 chars ✓)
 
@@ -42,16 +42,16 @@ toán,tiểu học,ôn toán,lớp 1,lớp 2,lớp 3,lớp 4,lớp 5,bé học,v
 ## 📝 Mô tả dài (App Description — 4000 ký tự max)
 
 ```
-🎓 VUI HỌC TOÁN — Ôn toán tiểu học vui nhộn dành cho bé từ lớp 1 đến lớp 5
+🎓 VUI HỌC TOÁN — Ôn toán tiểu học vui nhộn dành cho học sinh từ lớp 1 đến lớp 5
 
-Bé yêu của bạn đang gặp khó khăn với phép cộng, phép nhân, hay đo độ dài? Hãy để Vui Học Toán biến thời gian học toán thành giờ chơi thú vị! Ứng dụng được thiết kế bám sát chương trình Toán Tiểu học của bộ sách Chân Trời Sáng Tạo (Bộ GD&ĐT 2018).
+Con em bạn đang gặp khó khăn với phép cộng, phép nhân, hay đo độ dài? Hãy để Vui Học Toán biến thời gian học toán thành giờ chơi thú vị! Ứng dụng được thiết kế bám sát chương trình Toán Tiểu học của bộ sách Chân Trời Sáng Tạo (Bộ GD&ĐT 2018).
 
 ✨ TÍNH NĂNG NỔI BẬT
 
 📚 Toàn bộ chương trình lớp 1-5
 • Hơn 50 dạng bài tập theo phân phối chương trình SGK
 • Phân theo Học kỳ 1, Học kỳ 2 và Cả năm
-• Mỗi bé có hồ sơ riêng với lớp học cá nhân hóa
+• Mỗi học sinh có hồ sơ riêng với lớp học cá nhân hóa
 
 🎯 3 dạng câu hỏi phong phú
 • Điền số vào chỗ trống (12 + 43 = ?)
@@ -64,13 +64,13 @@ Bé yêu của bạn đang gặp khó khăn với phép cộng, phép nhân, hay
 • Đổi điểm lấy quà do phụ huynh quy định (xem TV, chơi game, đi chơi...)
 
 👨‍👩‍👧 Khu vực phụ huynh có PIN bảo vệ
-• Quản lý nhiều bé cùng dùng một thiết bị
+• Quản lý nhiều hồ sơ cùng dùng một thiết bị
 • Tùy chỉnh danh sách quà và giá trị
 • Cấu hình vòng quay (4-8 ô)
-• Xem lịch sử bài làm chi tiết của từng bé
+• Xem lịch sử bài làm chi tiết của từng hồ sơ
 
-🔒 An toàn tuyệt đối cho trẻ em
-• 100% offline — không cần Internet, không sợ bé lạc vào trang lạ
+🔒 An toàn tuyệt đối
+• 100% offline — không cần Internet, không sợ lạc vào trang lạ
 • Không quảng cáo
 • Không thu thập dữ liệu cá nhân
 • Tuân thủ COPPA, GDPR-K, Apple Kids guidelines
@@ -84,14 +84,14 @@ Bé yêu của bạn đang gặp khó khăn với phép cộng, phép nhân, hay
 📊 Theo dõi tiến bộ
 • Thống kê chi tiết: số đúng, sai, thời gian, streak liên tiếp
 • Lịch sử các phiên làm bài
-• Phụ huynh nắm được điểm yếu của bé
+• Phụ huynh nắm được điểm yếu của con em
 
 🎁 HOÀN TOÀN MIỄN PHÍ
 • Không giới hạn số câu, số bài
 • Không có gói trả phí
 • Không có giao dịch trong app
 
-Tải ngay để bé bắt đầu hành trình chinh phục toán học! 🚀
+Tải ngay để bắt đầu hành trình chinh phục toán học! 🚀
 
 ---
 
@@ -111,7 +111,7 @@ Phiên bản đầu tiên với:
 • Ôn tập toán lớp 1-5 theo SGK Chân Trời Sáng Tạo
 • 3 dạng câu hỏi: điền số, trắc nghiệm, toán giải
 • Hệ thống sao + vòng quay may mắn + đổi quà
-• Hồ sơ nhiều bé trên cùng một thiết bị
+• Hồ sơ nhiều người dùng trên cùng một thiết bị
 • Khu phụ huynh bảo vệ bằng PIN
 • Hoàn toàn miễn phí, offline, không quảng cáo
 ```
@@ -127,8 +127,8 @@ App Store yêu cầu screenshots cho ít nhất 1 size; Apple recommend nên có
 - **iPad Pro 12.9" 6th gen** (hoặc 13"): 2048×2732, **3-10 screenshots**
 
 ### Đề xuất 6 screenshots theo flow:
-1. Màn chọn bé (Profiles) — caption: "Hồ sơ riêng cho từng bé"
-2. Dashboard bé (Home) — caption: "Bé biết mình học lớp mấy"
+1. Màn chọn hồ sơ (Profiles) — caption: "Hồ sơ riêng cho từng học sinh"
+2. Dashboard (Home) — caption: "Học sinh biết mình học lớp mấy"
 3. Màn chọn dạng bài (TopicSelect) — caption: "50+ dạng bài bám SGK"
 4. Màn làm bài (Practice với câu phép tính to) — caption: "Bàn phím to, dễ bấm"
 5. Vòng quay may mắn (Wheel) — caption: "Học giỏi → quay vòng nhận điểm"
@@ -147,7 +147,7 @@ App Store yêu cầu screenshots cho ít nhất 1 size; Apple recommend nên có
 
 15-30 giây video showcase:
 - 0-3s: Splash screen + logo
-- 3-10s: Quick navigation: chọn bé → bắt đầu làm bài
+- 3-10s: Quick navigation: chọn hồ sơ → bắt đầu làm bài
 - 10-20s: Làm 2-3 câu (correct + emoji bay)
 - 20-25s: Hoàn thành → 3 sao
 - 25-30s: Vòng quay → trúng điểm
@@ -216,7 +216,7 @@ Trước khi submit, đảm bảo:
 ## 🌐 Marketing Channels (sau khi launch)
 
 - Facebook groups dành cho phụ huynh ("Cha mẹ dạy con học", "Nuôi dạy con thông minh"...)
-- TikTok / YouTube Shorts: video quay lại bé sử dụng
+- TikTok / YouTube Shorts: video quay lại học sinh sử dụng
 - Cộng đồng giáo viên tiểu học (review free)
 - Các hội nhóm Zalo phụ huynh trường tiểu học
 - Diễn đàn webtretho, lamchame

@@ -85,7 +85,7 @@ export function ParentProfilesEditScreen() {
   const handleSave = async () => {
     const trimmed = name.trim();
     if (!trimmed) {
-      Alert.alert('Thiếu thông tin', 'Hãy nhập tên của bé.');
+      Alert.alert('Thiếu thông tin', 'Hãy nhập tên học sinh.');
       return;
     }
     if (editing) {
@@ -102,7 +102,7 @@ export function ParentProfilesEditScreen() {
 
   const handleDelete = (p: Profile) => {
     if (profiles.length <= 1) {
-      Alert.alert('Không thể xóa', 'Cần giữ ít nhất 1 hồ sơ bé.');
+      Alert.alert('Không thể xóa', 'Cần giữ ít nhất 1 hồ sơ.');
       return;
     }
     Alert.alert(
@@ -146,16 +146,16 @@ export function ParentProfilesEditScreen() {
       </ScrollView>
 
       <View style={styles.footer}>
-        <Button title="+ Thêm bé mới" onPress={openCreate} size="lg" fullWidth />
+        <Button title="+ Thêm hồ sơ mới" onPress={openCreate} size="lg" fullWidth />
       </View>
 
       <Modal visible={showModal} animationType="slide" transparent onRequestClose={() => setShowModal(false)}>
         <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : undefined} style={styles.modalWrap}>
           <ScrollView style={styles.modal} contentContainerStyle={{ paddingBottom: spacing.xl }} keyboardShouldPersistTaps="handled">
-            <Text style={typography.h2}>{editing ? 'Sửa hồ sơ' : 'Thêm bé mới'}</Text>
+            <Text style={typography.h2}>{editing ? 'Sửa hồ sơ' : 'Thêm hồ sơ mới'}</Text>
 
             <View style={styles.avatarSection}>
-              <Avatar uri={avatarUri} name={name || 'Bé'} size={100} />
+              <Avatar uri={avatarUri} name={name || 'Học sinh'} size={100} />
               <Pressable onPress={pickImage} style={styles.uploadBtn}>
                 <Text style={styles.uploadBtnText}>📷 Chọn ảnh từ thư viện</Text>
               </Pressable>
@@ -177,7 +177,7 @@ export function ParentProfilesEditScreen() {
             </View>
 
             <Text style={[typography.body, { marginTop: spacing.md, marginBottom: spacing.xs }]}>
-              Tên của bé
+              Tên học sinh
             </Text>
             <TextInput
               value={name}

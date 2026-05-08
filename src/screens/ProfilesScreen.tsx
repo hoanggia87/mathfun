@@ -43,9 +43,9 @@ export function ProfilesScreen() {
     <SafeAreaView style={styles.container} edges={['top', 'bottom']}>
       <ScrollView contentContainerStyle={styles.scroll}>
         <View style={styles.header}>
-          <Text style={[typography.h1, { textAlign: 'center' }]}>Chào bé! 👋</Text>
+          <Text style={[typography.h1, { textAlign: 'center' }]}>Xin chào! 👋</Text>
           <Text style={[typography.body, { color: colors.textMuted, marginTop: 4, textAlign: 'center' }]}>
-            Hãy chọn bé để bắt đầu nhé
+            Hãy chọn hồ sơ để bắt đầu nhé
           </Text>
         </View>
 
@@ -86,6 +86,11 @@ function ProfileTile({ profile, onPress }: { profile: Profile; onPress: () => vo
       <View style={styles.pointBadge}>
         <Text style={styles.pointText}>⭐ {profile.totalPoints}</Text>
       </View>
+      {profile.pendingSpins > 0 && (
+        <View style={styles.spinBadge}>
+          <Text style={styles.spinText}>🎡 {profile.pendingSpins} lượt</Text>
+        </View>
+      )}
     </Pressable>
   );
 }
@@ -135,6 +140,13 @@ const styles = StyleSheet.create({
     borderRadius: radius.pill,
   },
   pointText: { fontSize: 14, color: colors.text, fontWeight: '700' },
+  spinBadge: {
+    backgroundColor: colors.accent,
+    paddingHorizontal: spacing.sm,
+    paddingVertical: 4,
+    borderRadius: radius.pill,
+  },
+  spinText: { fontSize: 14, color: colors.textInverse, fontWeight: '700' },
   parentBtn: {
     alignSelf: 'center',
     marginBottom: spacing.md,

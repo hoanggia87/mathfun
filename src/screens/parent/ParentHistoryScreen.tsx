@@ -84,7 +84,7 @@ export function ParentHistoryScreen() {
 
         {data.length === 0 && (
           <Text style={[typography.body, { color: colors.textMuted, textAlign: 'center', padding: spacing.xl }]}>
-            Chưa có hồ sơ bé nào
+            Chưa có hồ sơ nào
           </Text>
         )}
       </ScrollView>

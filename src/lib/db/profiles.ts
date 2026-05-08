@@ -7,6 +7,7 @@ export type Profile = {
   name: string;
   avatarUri: string | null;
   totalPoints: number;
+  pendingSpins: number;
   grade: Grade;
   createdAt: number;
 };
@@ -16,6 +17,7 @@ type Row = {
   name: string;
   avatar_uri: string | null;
   total_points: number;
+  pending_spins: number | null;
   grade: number;
   created_at: number;
 };
@@ -25,6 +27,7 @@ const fromRow = (r: Row): Profile => ({
   name: r.name,
   avatarUri: r.avatar_uri,
   totalPoints: r.total_points,
+  pendingSpins: r.pending_spins ?? 0,
   grade: (r.grade as Grade) ?? 2,
   createdAt: r.created_at,
 });
@@ -48,6 +51,7 @@ export async function createProfile(
     name: name.trim(),
     avatarUri,
     totalPoints: 0,
+    pendingSpins: 0,
     grade,
     createdAt: Date.now(),
   };
@@ -96,6 +100,33 @@ export async function addPoints(id: string, delta: number): Promise<number> {
     id
   );
   return row?.total_points ?? 0;
+}
+
+export async function addPendingSpins(id: string, delta: number): Promise<number> {
+  const db = await getDb();
+  await db.runAsync(
+    'UPDATE profiles SET pending_spins = MAX(0, pending_spins + ?) WHERE id = ?',
+    delta,
+    id
+  );
+  const row = await db.getFirstAsync<{ pending_spins: number }>(
+    'SELECT pending_spins FROM profiles WHERE id = ?',
+    id
+  );
+  return row?.pending_spins ?? 0;
+}
+
+export async function consumePendingSpin(id: string): Promise<number> {
+  const db = await getDb();
+  await db.runAsync(
+    'UPDATE profiles SET pending_spins = MAX(0, pending_spins - 1) WHERE id = ?',
+    id
+  );
+  const row = await db.getFirstAsync<{ pending_spins: number }>(
+    'SELECT pending_spins FROM profiles WHERE id = ?',
+    id
+  );
+  return row?.pending_spins ?? 0;
 }
 
 export async function getProfile(id: string): Promise<Profile | null> {

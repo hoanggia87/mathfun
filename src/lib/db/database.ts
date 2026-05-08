@@ -93,6 +93,25 @@ const MIGRATIONS: Migration[] = [
       }
     },
   },
+  {
+    version: 3,
+    up: async (db: SQLite.SQLiteDatabase) => {
+      const cols = await db.getAllAsync<{ name: string }>(
+        "PRAGMA table_info(profiles)"
+      );
+      if (!cols.some((c) => c.name === 'pending_spins')) {
+        await db.execAsync(
+          'ALTER TABLE profiles ADD COLUMN pending_spins INTEGER NOT NULL DEFAULT 0;'
+        );
+        await db.execAsync(`
+          UPDATE profiles SET pending_spins = COALESCE((
+            SELECT SUM(CASE WHEN spins_earned > spins_used THEN spins_earned - spins_used ELSE 0 END)
+            FROM sessions WHERE sessions.profile_id = profiles.id
+          ), 0);
+        `);
+      }
+    },
+  },
 ];
 
 async function runMigrations(db: SQLite.SQLiteDatabase) {
@@ -183,7 +202,7 @@ async function seedDefaults(db: SQLite.SQLiteDatabase) {
     await db.runAsync(
       'INSERT INTO profiles (id, name, avatar_uri, total_points, grade, created_at) VALUES (?, ?, ?, ?, ?, ?)',
       'seed-default-be',
-      'Bé',
+      'Học sinh',
       '🦁',
       0,
       1,

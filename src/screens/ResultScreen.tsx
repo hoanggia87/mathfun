@@ -1,11 +1,12 @@
-import React from 'react';
-import { ScrollView, StyleSheet, Text, View } from 'react-native';
+import React, { useCallback } from 'react';
+import { BackHandler, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { useNavigation, useRoute, type RouteProp } from '@react-navigation/native';
+import { useFocusEffect, useNavigation, useRoute, type RouteProp } from '@react-navigation/native';
 import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 
 import { Button } from '@/components/Button';
 import { Stars } from '@/components/Stars';
+import { feedbackResult } from '@/lib/audio';
 import { useSessionStore } from '@/store/sessionStore';
 import { colors, radius, spacing, typography } from '@/theme';
 import type { RootStackParamList } from '@/navigation/types';
@@ -23,7 +24,7 @@ function fmtTime(sec: number): string {
 const PRAISE = [
   'Tuyệt vời! 🎉',
   'Quá giỏi! 👏',
-  'Bé thông minh quá! 🌟',
+  'Bạn thông minh quá! 🌟',
   'Cố lên nha! 💪',
   'Lần sau sẽ giỏi hơn nữa! 🚀',
 ];
@@ -39,6 +40,14 @@ export function ResultScreen() {
   const nav = useNavigation<Nav>();
   const route = useRoute<Rt>();
   const result = useSessionStore((s) => s.lastResult);
+
+  useFocusEffect(
+    useCallback(() => {
+      feedbackResult();
+      const sub = BackHandler.addEventListener('hardwareBackPress', () => true);
+      return () => sub.remove();
+    }, []),
+  );
 
   if (!result || result.id !== route.params.sessionId) {
     return (
@@ -89,7 +98,7 @@ export function ResultScreen() {
           {result.spinsEarned > 0 && (
             <Button
               title="🎡 Quay ngay"
-              onPress={() => nav.replace('Wheel', { sessionId: result.id })}
+              onPress={() => nav.replace('Wheel')}
               size="lg"
               fullWidth
             />

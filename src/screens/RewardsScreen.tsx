@@ -37,7 +37,7 @@ export function RewardsScreen() {
     if (!profile) return;
     if (profile.totalPoints < r.cost) {
       feedbackWrong();
-      Alert.alert('Chưa đủ điểm', `Cần ${r.cost} điểm, bé hiện có ${profile.totalPoints} điểm.`);
+      Alert.alert('Chưa đủ điểm', `Cần ${r.cost} điểm, bạn hiện có ${profile.totalPoints} điểm.`);
       return;
     }
     Alert.alert('Đổi quà?', `Đổi "${r.name}" với ${r.cost} điểm?`, [
@@ -50,7 +50,7 @@ export function RewardsScreen() {
           const refreshed = await getProfile(profile.id);
           if (refreshed) setCurrent(refreshed);
           feedbackCorrect();
-          Alert.alert('Đổi quà thành công 🎉', `Bé đã đổi "${r.name}". Hãy báo phụ huynh để nhận quà nhé!`);
+          Alert.alert('Đổi quà thành công 🎉', `Bạn đã đổi "${r.name}". Hãy báo phụ huynh để nhận quà nhé!`);
         },
       },
     ]);
