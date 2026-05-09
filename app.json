@@ -2,7 +2,7 @@
   "expo": {
     "name": "Vui Học Toán",
     "slug": "vui-hoc-toan",
-    "version": "1.0.1",
+    "version": "1.0.2",
     "orientation": "default",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
@@ -15,7 +15,7 @@
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.mathsth.app",
-      "buildNumber": "8",
+      "buildNumber": "9",
       "infoPlist": {
         "NSPhotoLibraryUsageDescription": "Cho phép chọn ảnh đại diện hồ sơ từ thư viện ảnh.",
         "ITSAppUsesNonExemptEncryption": false
